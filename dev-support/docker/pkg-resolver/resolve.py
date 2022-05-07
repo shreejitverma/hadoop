@@ -65,7 +65,7 @@ def get_packages(platform, release=None):
                 return
             packages.append(package)
         else:
-            raise Exception('Unknown package of type: {}'.format(type(package)))
+            raise Exception(f'Unknown package of type: {type(package)}')
 
     for platforms in filter(lambda x: x.get(platform) is not None, pkgs.values()):
         process_package(platforms.get(platform))
@@ -74,8 +74,11 @@ def get_packages(platform, release=None):
 
 if __name__ == '__main__':
     if len(sys.argv) < 2:
-        print('ERROR: Need at least 1 argument, {} were provided'.format(len(sys.argv) - 1),
-              file=sys.stderr)
+        print(
+            f'ERROR: Need at least 1 argument, {len(sys.argv) - 1} were provided',
+            file=sys.stderr,
+        )
+
         sys.exit(1)
 
     arg_parser = argparse.ArgumentParser(
@@ -88,9 +91,10 @@ if __name__ == '__main__':
 
     if not is_supported_platform(args.platform[0]):
         print(
-            'ERROR: The given platform {} is not supported. '
-            'Please refer to platforms.json for a list of supported platforms'.format(
-                args.platform), file=sys.stderr)
+            f'ERROR: The given platform {args.platform} is not supported. Please refer to platforms.json for a list of supported platforms',
+            file=sys.stderr,
+        )
+
         sys.exit(1)
 
     packages_to_install = get_packages(args.platform[0],

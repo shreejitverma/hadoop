@@ -145,7 +145,7 @@ def find_jars(path):
 def write_xml_file(path, version, jars):
   """Write the XML manifest file for JACC."""
   with open(path, "wt") as f:
-    f.write("<version>" + version + "</version>\n")
+    f.write(f"<version>{version}" + "</version>\n")
     f.write("<archives>")
     for j in jars:
       f.write(j + "\n")
@@ -187,12 +187,8 @@ def filter_jars(jars, include_filters, exclude_filters):
   filtered = []
   # Apply include filters
   for j in jars:
-    found = False
     basename = os.path.basename(j)
-    for f in include_filters:
-      if f.match(basename):
-        found = True
-        break
+    found = any(f.match(basename) for f in include_filters)
     if found:
       filtered += [j]
     else:
@@ -201,11 +197,7 @@ def filter_jars(jars, include_filters, exclude_filters):
   exclude_filtered = []
   for j in filtered:
     basename = os.path.basename(j)
-    found = False
-    for f in exclude_filters:
-      if f.match(basename):
-        found = True
-        break
+    found = any(f.match(basename) for f in exclude_filters)
     if found:
       logging.debug("Ignoring JAR %s", j)
     else:

@@ -43,8 +43,11 @@ def is_supported_platform(platform):
 
 if __name__ == '__main__':
     if len(sys.argv) != 2:
-        print('ERROR: Expecting 1 argument, {} were provided'.format(len(sys.argv) - 1),
-              file=sys.stderr)
+        print(
+            f'ERROR: Expecting 1 argument, {len(sys.argv) - 1} were provided',
+            file=sys.stderr,
+        )
+
         sys.exit(1)
 
     sys.exit(0 if is_supported_platform(sys.argv[1]) else 1)
